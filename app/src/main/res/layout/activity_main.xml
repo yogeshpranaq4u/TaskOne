@@ -14,4 +14,12 @@
         android:layout_marginTop="20dp"
         android:id="@+id/api_activity"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Document Activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/doc_activity"
+        android:layout_below="@id/api_activity"/>
 </RelativeLayout>

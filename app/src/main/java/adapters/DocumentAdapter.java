@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quantum.taskone.R;
 
+import java.io.File;
 import java.util.List;
 
 public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.DocumentViewHolder> {
@@ -33,14 +34,14 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
 
     @Override
     public void onBindViewHolder(@NonNull DocumentViewHolder holder, int position) {
-        holder.imageView.setImageURI(Uri.parse(imagepathlist.get(position)));
+        //holder.imageView.setImageURI(Uri.parse(imagepathlist.get(position)));
 
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return imagepathlist.size();
     }
 
     public class DocumentViewHolder extends RecyclerView.ViewHolder {

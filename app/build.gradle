@@ -49,4 +49,8 @@ dependencies {
 
     //document
     implementation "androidx.documentfile:documentfile:1.0.1"
+    
+    implementation "com.github.barteksc:android-pdf-viewer:2.0.3"
+
+
 }

@@ -40,13 +40,15 @@ public class DocumentData extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED)  {
 
             // Todo : If Permission Granted Then Show SMS
-            display();
+
 
         } else {
             // Todo : Then Set Permission
             final int REQUEST_CODE_ASK_PERMISSIONS = 123;
             ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_EXTERNAL_STORAGE"}, REQUEST_CODE_ASK_PERMISSIONS);
         }
+
+        display();
 
     }
 
@@ -60,17 +62,19 @@ public class DocumentData extends AppCompatActivity {
             for (File singleImage : imageFile) {
                 if (singleImage.isDirectory() && !singleImage.isHidden()) {
                     arrayList.addAll(findImages(singleImage));
+                    Log.d(TAG, "findImage: "+singleImage);
                 } else {
-                    if (singleImage.getName().endsWith(".pdf")/* ||
-                            singleImage.getName().endsWith(".") ||
+                    if (singleImage.getName().endsWith(".pdf") ||
+                            singleImage.getName().endsWith(".txt") /*||
                             singleImage.getName().endsWith(".webp")*/) {
                         arrayList.add(singleImage);
+                        Log.d(TAG, "findImages: "+arrayList.add(singleImage));
                     }
                 }
             }
         }
         else{
-            Log.d(TAG, "findImages: ");
+            Log.d(TAG, "findImages fail ");
         }
 
         return arrayList;
@@ -82,6 +86,7 @@ public class DocumentData extends AppCompatActivity {
         for (int i=0;i<mfiles.size();i++){
             imagePaths.add(String.valueOf(mfiles.get(i)));
 
+            Log.d(TAG, "display: "+imagePaths);
             documentAdapter=new DocumentAdapter(imagePaths);
             recyclerView.setAdapter(documentAdapter);
             recyclerView.setLayoutManager(new GridLayoutManager(this,3));
