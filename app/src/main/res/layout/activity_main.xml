@@ -22,4 +22,22 @@
         android:layout_marginTop="20dp"
         android:id="@+id/doc_activity"
         android:layout_below="@id/api_activity"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category Api Activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/cat_activity"
+        android:layout_below="@id/doc_activity"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image Activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/img_activity"
+        android:layout_below="@id/cat_activity"/>
 </RelativeLayout>

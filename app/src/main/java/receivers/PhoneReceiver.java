@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -32,9 +33,20 @@ public class PhoneReceiver extends BroadcastReceiver {
             if(intent.getAction().equals("android.intent.action.PHONE_STATE")){
                 String state=intent.getStringExtra(TelephonyManager.EXTRA_STATE);
                 if(state.equals(TelephonyManager.EXTRA_STATE_RINGING)){
-                    phonenumbers = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-                    Log.d(TAG, "onReceive: "+phonenumbers);
-                    Toast.makeText(context,"Incoming call number- "+phonenumbers,Toast.LENGTH_SHORT).show();
+
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
+                        phonenumbers = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+                        Log.d(TAG, "get number incoming: "+phonenumbers);
+                        if(phonenumbers==null){
+                            Toast.makeText(context,"Number is Private", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        phonenumbers = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+                        Log.d(TAG, "get number incoming: "+phonenumbers);
+                        Toast.makeText(context,"Incoming Number"+phonenumbers, Toast.LENGTH_SHORT).show();
+                    }
+
 
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.cancel_dialog);
@@ -55,7 +67,10 @@ public class PhoneReceiver extends BroadcastReceiver {
                 }
 
                 else if(state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)){
+/*                    String outgoingNumber=intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+                    Log.d(TAG, "on outgoing: "+outgoingNumber);*/
                     Toast.makeText(context,"Phone off Hook", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context,"OutGoing Call"+outgoingNumber, Toast.LENGTH_SHORT).show();
                 }
             }
 

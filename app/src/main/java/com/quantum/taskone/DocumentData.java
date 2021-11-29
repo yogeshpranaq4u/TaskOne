@@ -1,15 +1,20 @@
 package com.quantum.taskone;
 
-import android.content.pm.PackageManager;
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,18 +42,11 @@ public class DocumentData extends AppCompatActivity {
 
         imagePaths=new ArrayList<>();
 
-        if(ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED)  {
-
-            // Todo : If Permission Granted Then Show SMS
 
 
-        } else {
-            // Todo : Then Set Permission
-            final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-            ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_EXTERNAL_STORAGE"}, REQUEST_CODE_ASK_PERMISSIONS);
-        }
-
-        display();
+    //   display();
+        //getImages();
+        new ImageTask().execute();
 
     }
 
@@ -91,6 +89,91 @@ public class DocumentData extends AppCompatActivity {
             recyclerView.setAdapter(documentAdapter);
             recyclerView.setLayoutManager(new GridLayoutManager(this,3));
 
+        }
+    }
+
+    //@SuppressLint("Range")
+ /*   public void getImages(){
+        ContentResolver contentResolver=getContentResolver();
+        Uri uri= MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+
+        if (uri!=null){
+            CursorLoader cursorLoader= (CursorLoader) contentResolver.query(uri,null,null,null,null);
+            Cursor cursor=contentResolver.query(uri,null,null,null,null);
+            Log.d(TAG, "getImages: "+cursor.getCount());
+            if(cursor!=null){
+                if(cursor.getCount()>0){
+                    while (cursor.moveToNext()){
+                        @SuppressLint("Range") String images=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                        String imageName=cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME));
+                        Bitmap bitmapFactory=BitmapFactory.decodeFile(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)));
+                        imagePaths.add(images);
+                        documentAdapter=new DocumentAdapter(imagePaths);
+                        recyclerView.setAdapter(documentAdapter);
+                        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+                        Log.d(TAG, "Images: "+imagePaths);
+                    }
+                }
+            }
+        }
+
+    }*/
+
+    private class ImageTask extends AsyncTask<Void, Void,Cursor>{
+
+        ContentResolver contentResolver=getContentResolver();
+        Uri uri= MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+
+            Cursor cursor=contentResolver.query(uri,null,null,null,null);
+            Log.d(TAG, "getImages: "+cursor.getCount());
+            if(cursor!=null){
+                if(cursor.getCount()>0){
+                    while (cursor.moveToNext()){
+                        @SuppressLint("Range") String images=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                        String imageName=cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME));
+                      //  @SuppressLint("Range") Bitmap bitmapFactory=BitmapFactory.decodeFile(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)));
+                        imagePaths.add(images);
+                        Log.d(TAG, "doInBackground: "+imagePaths.add(images));
+                    }
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            documentAdapter=new DocumentAdapter(imagePaths);
+            recyclerView.setAdapter(documentAdapter);
+            recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
+            Log.d(TAG, "Images: "+imagePaths);
+            super.onPostExecute(cursor);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.d(TAG, "onPreExecute: ");
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            Log.d(TAG, "onProgressUpdate: ");
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Log.d(TAG, "onCancelled: ");
+        }
+
+        @Override
+        protected void onCancelled(Cursor cursor) {
+            super.onCancelled(cursor);
+            Log.d(TAG, "onCancelled: ");
         }
     }
 }

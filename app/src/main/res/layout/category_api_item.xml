@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
     app:cardBackgroundColor="#F6F6F6"
-    app:cardCornerRadius="10dp">
+    android:layout_margin="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/exercise_header"
+            android:id="@+id/cat_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -20,46 +20,38 @@
             android:text="Testing"
             android:textSize="18sp" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_view"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_below="@id/exercise_header"
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/cat_image"
+            android:layout_below="@id/cat_name"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true" />
+            android:src="@drawable/software_update_icon"
+            android:layout_marginBottom="5dp"/>
 
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/exercise_header"
+            android:layout_below="@id/cat_name"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp">
 
             <TextView
-                android:id="@+id/calories_text"
+                android:id="@+id/days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Calories" />
 
             <TextView
-                android:id="@+id/sets_text"
+                android:id="@+id/cat_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/calories_text"
+                android:layout_below="@id/days"
                 android:text="Sets: jksdk"
                 android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/time_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/sets_text"
-                android:text="Time" />
 
         </RelativeLayout>
 

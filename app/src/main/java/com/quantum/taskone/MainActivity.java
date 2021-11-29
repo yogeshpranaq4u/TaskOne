@@ -46,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_PHONE_STATE"}, REQUEST_CODE_ASK_PERMISSIONS);
         }*/
 
+        if(ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED)  {
+
+            // Todo : If Permission Granted Then Show SMS
+
+
+        } else {
+            // Todo : Then Set Permission
+            final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+            ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_EXTERNAL_STORAGE"}, REQUEST_CODE_ASK_PERMISSIONS);
+        }
         buttonClick();
         telephonNumber();
         PhoneReceiver phoneReceiver=new PhoneReceiver();
@@ -77,24 +87,36 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, DocumentData.class));
             }
         });
+
+        findViewById(R.id.cat_activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CategoryApiActivity.class));
+            }
+        });
+
+        /*findViewById(R.id.img_activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,DocumentActivity.class));
+            }
+        });*/
     }
 
     public void telephonNumber() {
         @SuppressLint("ServiceCast") TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ) {
 
             final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG}, REQUEST_CODE_ASK_PERMISSIONS);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS}, REQUEST_CODE_ASK_PERMISSIONS);
             return;
         }
-        String number=telephonyManager.getLine1Number();
+       /* String number=telephonyManager.getLine1Number();
         String numberd=telephonyManager.getVoiceMailNumber();
         Log.d(TAG, "telephonNumberd: "+numberd);
-        Log.d(TAG, "telephonNumber: "+number);
+        Log.d(TAG, "telephonNumber: "+number);*/
     }
 
     @Override

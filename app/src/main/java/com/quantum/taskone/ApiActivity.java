@@ -42,7 +42,7 @@ public class ApiActivity extends AppCompatActivity {
        call.enqueue(new Callback< ApiModel>() {
            @Override
            public void onResponse(Call< ApiModel> call, Response< ApiModel> response) {
-               Log.d(TAG, "onResponse: "+response.body().getDayslist().get(4).getExercise());
+               Log.d(TAG, "onResponse: "+response.body().getDayslist());
                Log.d(TAG, "onResponse: "+response.raw().request().url());
                apiAdapter.setList(response.body().getDayslist().get(4).getExercise());
                apiAdapter.notifyDataSetChanged();
